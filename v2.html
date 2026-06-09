@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MobilizAÇÃO 2025 — ONG Moradia e Cidadania</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --orange: #F47920;
+    --blue:   #003F8A;
+    --dark:   #0A0F1E;
+    --card:   #111827;
+    --text:   #E5E7EB;
+    --muted:  #9CA3AF;
+    --radius: 16px;
+    --glow:   0 0 40px rgba(244,121,32,.18);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    line-height: 1.65;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    backdrop-filter: blur(16px);
+    background: rgba(10,15,30,.82);
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .75rem 2rem;
+  }
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    font-weight: 900;
+    font-size: 1rem;
+    color: #fff;
+    text-decoration: none;
+  }
+  .nav-brand span { color: var(--orange); }
+  .nav-links {
+    display: flex;
+    gap: 1.75rem;
+    list-style: none;
+    align-items: center;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: .85rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: #fff; }
+  .nav-logo {
+    height: 52px;
+    width: auto;
+    opacity: .85;
+    transition: opacity .2s;
+  }
+  .nav-logo:hover { opacity: 1; }
+  @media (max-width: 640px) { .nav-links { display: none; } }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 6rem 1.5rem 4rem;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 30%, rgba(0,63,138,.45) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 50% at 80% 80%, rgba(244,121,32,.15) 0%, transparent 60%),
+      var(--dark);
+    position: relative;
+    overflow: hidden;
+  }
+  #hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    background: rgba(244,121,32,.15);
+    border: 1px solid rgba(244,121,32,.35);
+    color: var(--orange);
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: .35rem .9rem;
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+  }
+  #hero h1 {
+    font-size: clamp(2.8rem, 8vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -.03em;
+    color: #fff;
+    margin-bottom: .5rem;
+  }
+  #hero h1 em {
+    font-style: normal;
+    color: var(--orange);
+  }
+  #hero .sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 560px;
+    margin: 1rem auto 3rem;
+  }
+
+  /* Stats row */
+  .stats-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 860px;
+  }
+  .stat-pill {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 999px;
+    padding: .65rem 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    backdrop-filter: blur(8px);
+  }
+  .stat-pill .n {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #fff;
+  }
+  .stat-pill .l {
+    font-size: .75rem;
+    color: var(--muted);
+    font-weight: 600;
+    text-align: left;
+    line-height: 1.3;
+    max-width: 90px;
+  }
+  .stat-pill .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--orange);
+    flex-shrink: 0;
+  }
+  .scroll-hint {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .4rem;
+    color: var(--muted);
+    font-size: .75rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    animation: bounce 2s infinite;
+  }
+  .scroll-hint svg { opacity: .5; }
+  @keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(6px); }
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 5rem 1.5rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: .6rem;
+  }
+  h2 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .lead {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 680px;
+    margin-bottom: 2.5rem;
+  }
+  .divider {
+    width: 48px; height: 3px;
+    background: var(--orange);
+    border-radius: 2px;
+    margin: .75rem 0 2rem;
+  }
+
+  /* ── CAMPAIGN CARDS ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: var(--radius);
+    padding: 1.5rem 1.25rem;
+    transition: border-color .2s, transform .2s;
+  }
+  .card:hover { border-color: var(--orange); transform: translateY(-3px); }
+  .card-icon {
+    font-size: 1.75rem;
+    margin-bottom: .75rem;
+  }
+  .card h3 {
+    font-size: .95rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: .35rem;
+  }
+  .card p {
+    font-size: .83rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── ODS ── */
+  .ods-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  .ods-images img {
+    width: 100%;
+    border-radius: var(--radius);
+    border: 1px solid rgba(255,255,255,.06);
+  }
+  @media (max-width: 580px) {
+    .ods-images { grid-template-columns: 1fr; }
+  }
+  .ods-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    margin-bottom: 2rem;
+  }
+  .ods-tag {
+    background: rgba(0,63,138,.35);
+    border: 1px solid rgba(0,63,138,.6);
+    color: #93C5FD;
+    font-size: .8rem;
+    font-weight: 700;
+    padding: .3rem .8rem;
+    border-radius: 6px;
+  }
+
+  /* ── ESTADOS CAROUSEL ── */
+  .carousel-wrap {
+    position: relative;
+  }
+  .region-tabs {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+  }
+  .region-tab {
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.1);
+    color: var(--muted);
+    font-size: .78rem;
+    font-weight: 700;
+    padding: .4rem .9rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .region-tab.active, .region-tab:hover {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: #fff;
+  }
+  .carousel {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: .75rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(244,121,32,.4) transparent;
+  }
+  .carousel::-webkit-scrollbar { height: 4px; }
+  .carousel::-webkit-scrollbar-thumb { background: rgba(244,121,32,.4); border-radius: 2px; }
+  .carousel-slide {
+    flex-shrink: 0;
+    width: 300px;
+    scroll-snap-align: start;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.07);
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .carousel-slide:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--glow);
+  }
+  .carousel-slide img {
+    width: 100%;
+    display: block;
+  }
+  .region-group { display: none; }
+  .region-group.active { display: flex; }
+
+  /* ── LIGHTBOX ── */
+  #lb {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(0,0,0,.92);
+    justify-content: center;
+    align-items: center;
+    cursor: zoom-out;
+  }
+  #lb.open { display: flex; }
+  #lb img {
+    max-width: 90vw;
+    max-height: 92vh;
+    border-radius: var(--radius);
+    box-shadow: 0 0 80px rgba(0,0,0,.8);
+    cursor: default;
+  }
+  #lb-prev, #lb-next {
+    position: fixed;
+    top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.15);
+    color: #fff;
+    font-size: 1.5rem;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(8px);
+    transition: background .2s;
+  }
+  #lb-prev:hover, #lb-next:hover { background: rgba(244,121,32,.4); }
+  #lb-prev { left: 1rem; }
+  #lb-next { right: 1rem; }
+  #lb-close {
+    position: fixed;
+    top: 1rem; right: 1rem;
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.15);
+    color: #fff;
+    font-size: 1.2rem;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ── FINANCE ── */
+  .finance-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  .finance-card {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .finance-card .fc-label {
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: .5rem;
+  }
+  .finance-card .fc-val {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--orange);
+  }
+
+  /* ── QUOTE ── */
+  .pull-quote {
+    border-left: 3px solid var(--orange);
+    padding: 1rem 1.5rem;
+    background: rgba(244,121,32,.06);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: 1.05rem;
+    font-style: italic;
+    color: #D1D5DB;
+    margin: 2rem 0;
+    line-height: 1.7;
+  }
+
+  /* ── PRESIDENT ── */
+  .president-block {
+    background: linear-gradient(135deg, rgba(0,63,138,.4), rgba(0,63,138,.15));
+    border: 1px solid rgba(0,63,138,.5);
+    border-radius: var(--radius);
+    padding: 2rem 2rem 1.5rem;
+  }
+  .president-block blockquote {
+    font-size: 1rem;
+    color: #E5E7EB;
+    font-style: italic;
+    line-height: 1.75;
+    margin-bottom: 1.25rem;
+  }
+  .president-block .sig { font-weight: 700; color: #fff; font-size: .9rem; }
+  .president-block .sig small { display: block; font-weight: 400; color: var(--muted); font-size: .8rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 2rem;
+    background: #080C18;
+    border-top: 1px solid rgba(255,255,255,.06);
+    padding: 3rem 1.5rem 2rem;
+  }
+  .footer-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.75rem;
+    text-align: center;
+  }
+  .footer-logo {
+    height: 140px;
+    width: auto;
+    opacity: .85;
+  }
+  .footer-socials {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .6rem;
+  }
+  .footer-socials a {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: .78rem;
+    font-weight: 600;
+    padding: .35rem .8rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.04);
+    transition: color .2s, border-color .2s;
+  }
+  .footer-socials a:hover { color: #fff; border-color: rgba(255,255,255,.2); }
+  .footer-copy {
+    font-size: .72rem;
+    color: rgba(255,255,255,.2);
+  }
+
+  /* ── SEPARATOR ── */
+  .section-sep {
+    height: 1px;
+    background: rgba(255,255,255,.06);
+    max-width: 960px;
+    margin: 0 auto;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero"><img src="images/logo_negativo.png" alt="ONG Moradia e Cidadania" class="nav-logo"/></a>
+  <ul class="nav-links">
+    <li><a href="#campanha">Campanha</a></li>
+    <li><a href="#ods">ODS</a></li>
+    <li><a href="#estados">Territórios</a></li>
+    <li><a href="#financeiro">Transparência</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-tag">
+    <svg width="12" height="12" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    5, 6 e 7 de Dezembro de 2025
+  </div>
+  <h1>Mobiliz<em>AÇÃO</em><br/>2025</h1>
+  <p class="sub">A campanha nacional de voluntariado socioambiental da ONG Moradia e Cidadania, realizada no Dia Internacional do Voluntário e inspirada pela COP30.</p>
+
+  <div class="stats-row">
+    <div class="stat-pill"><div class="dot"></div><div class="n">1.417</div><div class="l">Voluntários mobilizados</div></div>
+    <div class="stat-pill"><div class="dot"></div><div class="n">11.136</div><div class="l">Beneficiários diretos</div></div>
+    <div class="stat-pill"><div class="dot"></div><div class="n">23</div><div class="l">Estados participantes</div></div>
+    <div class="stat-pill"><div class="dot"></div><div class="n">3.280</div><div class="l">Mudas plantadas</div></div>
+    <div class="stat-pill"><div class="dot"></div><div class="n">4,3t</div><div class="l">Resíduos recolhidos</div></div>
+    <div class="stat-pill"><div class="dot"></div><div class="n">27</div><div class="l">Espaços revitalizados</div></div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Explorar</span>
+    <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </div>
+</div>
+
+<div class="section-sep"></div>
+
+<!-- CAMPANHA -->
+<section id="campanha">
+  <div class="section-label">Sobre a Campanha</div>
+  <h2>Transformando debate global<br/>em ação local</h2>
+  <div class="divider"></div>
+  <p class="lead">Em 2025, a ONG completou 25 anos e o Brasil sediou a COP30. A MobilizAÇÃO nasceu desse cruzamento: conectar a urgência climática global às comunidades onde a rede atua.</p>
+
+  <div class="president-block" style="margin-bottom:2.5rem;">
+    <blockquote>"De norte a sul do país, voluntários dedicaram tempo, energia e talento para revitalizar espaços públicos, recuperar áreas degradadas, implantar hortas comunitárias e promover educação ambiental. Cada ação reafirmou que o voluntariado é uma poderosa ferramenta de transformação local."</blockquote>
+    <div class="sig">Laurêncio João Körbes <small>Presidente Executivo — ONG Moradia e Cidadania</small></div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card"><div class="card-icon">🧹</div><h3>Mutirões de limpeza</h3><p>Retirada de resíduos de praias, rios, parques e espaços urbanos — ~4,3 toneladas recolhidas.</p></div>
+    <div class="card"><div class="card-icon">🌱</div><h3>Plantio de árvores</h3><p>3.280 mudas nativas e frutíferas plantadas, ampliando cobertura vegetal e protegendo nascentes.</p></div>
+    <div class="card"><div class="card-icon">🥦</div><h3>Hortas comunitárias</h3><p>Implantação de espaços de produção alimentar em comunidades em situação de vulnerabilidade.</p></div>
+    <div class="card"><div class="card-icon">🏗️</div><h3>Revitalização</h3><p>27 espaços recuperados — praças, escolas, quadras e áreas de nascente transformadas.</p></div>
+    <div class="card"><div class="card-icon">📚</div><h3>Educação ambiental</h3><p>Oficinas e palestras sobre clima, consumo consciente e gestão de resíduos com crianças e jovens.</p></div>
+  </div>
+</section>
+
+<div class="section-sep"></div>
+
+<!-- ODS -->
+<section id="ods">
+  <div class="section-label">Agenda 2030</div>
+  <h2>Contribuição para os ODS</h2>
+  <div class="divider"></div>
+  <p class="lead">As práticas realizadas contribuíram diretamente para os Objetivos de Desenvolvimento Sustentável da ONU com maior incidência em:</p>
+
+  <div class="ods-tags">
+    <span class="ods-tag">ODS 6 · Água e Saneamento</span>
+    <span class="ods-tag">ODS 11 · Cidades Sustentáveis</span>
+    <span class="ods-tag">ODS 12 · Consumo Responsável</span>
+    <span class="ods-tag">ODS 13 · Ação Climática</span>
+    <span class="ods-tag">ODS 15 · Vida Terrestre</span>
+    <span class="ods-tag">ODS 17 · Parcerias</span>
+  </div>
+
+  <div class="ods-images">
+    <img src="images/data-15.jpg" alt="Indicadores ODS — MobilizAÇÃO 2025"/>
+    <img src="images/data-16.jpg" alt="Principais ODS impactados"/>
+  </div>
+</section>
+
+<div class="section-sep"></div>
+
+<!-- ESTADOS -->
+<section id="estados">
+  <div class="section-label">Práticas nos Territórios</div>
+  <h2>O que aconteceu em cada estado</h2>
+  <div class="divider"></div>
+  <p class="lead">Clique em qualquer região para ver as práticas. Arraste para navegar entre os estados.</p>
+
+  <div class="carousel-wrap">
+    <div class="region-tabs">
+      <button class="region-tab active" onclick="showRegion('norte', this)">Norte</button>
+      <button class="region-tab" onclick="showRegion('nordeste', this)">Nordeste</button>
+      <button class="region-tab" onclick="showRegion('co', this)">Centro-Oeste</button>
+      <button class="region-tab" onclick="showRegion('sudeste', this)">Sudeste</button>
+      <button class="region-tab" onclick="showRegion('sul', this)">Sul</button>
+    </div>
+
+    <!-- NORTE: AM, AP, PA, RO, RR, TO -->
+    <div class="carousel region-group active" id="r-norte">
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-18.jpg" alt="Amazonas"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-19.jpg" alt="Amazonas 2"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-20.jpg" alt="Amapá"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-21.jpg" alt="Amapá 2"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-40.jpg" alt="Pará"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-41.jpg" alt="Pará 2"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-54.jpg" alt="Roraima"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-55.jpg" alt="Roraima 2"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-72.jpg" alt="Tocantins"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-73.jpg" alt="Tocantins 2"/></div>
+    </div>
+
+    <!-- NORDESTE: BA, CE, PE, PI, RN, SE -->
+    <div class="carousel region-group" id="r-nordeste">
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-22.jpg" alt="Bahia"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-23.jpg" alt="Bahia 2"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-24.jpg" alt="Ceará"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-25.jpg" alt="Ceará 2"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-42.jpg" alt="Pernambuco"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-43.jpg" alt="Pernambuco 2"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-44.jpg" alt="Pernambuco 3"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-45.jpg" alt="Pernambuco 4"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-46.jpg" alt="Piauí"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-47.jpg" alt="Piauí 2"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-52.jpg" alt="Rio Grande do Norte"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-53.jpg" alt="Rio Grande do Norte 2"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-62.jpg" alt="Sergipe"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-63.jpg" alt="Sergipe 2"/></div>
+    </div>
+
+    <!-- CENTRO-OESTE: DF, GO, MS, MT -->
+    <div class="carousel region-group" id="r-co">
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-26.jpg" alt="Distrito Federal"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-27.jpg" alt="Distrito Federal 2"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-28.jpg" alt="Distrito Federal 3"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-29.jpg" alt="Distrito Federal 4"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-32.jpg" alt="Goiás"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-33.jpg" alt="Goiás 2"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-36.jpg" alt="Mato Grosso do Sul"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-37.jpg" alt="Mato Grosso do Sul 2"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-38.jpg" alt="Mato Grosso"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-39.jpg" alt="Mato Grosso 2"/></div>
+    </div>
+
+    <!-- SUDESTE: ES, MG, RJ, SP -->
+    <div class="carousel region-group" id="r-sudeste">
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-30.jpg" alt="Espírito Santo"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-31.jpg" alt="Espírito Santo 2"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-34.jpg" alt="Minas Gerais"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-35.jpg" alt="Minas Gerais 2"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-50.jpg" alt="Rio de Janeiro"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-51.jpg" alt="Rio de Janeiro 2"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-64.jpg" alt="São Paulo"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-65.jpg" alt="São Paulo 2"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-66.jpg" alt="São Paulo 3"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-67.jpg" alt="São Paulo 4"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-68.jpg" alt="São Paulo 5"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-69.jpg" alt="São Paulo 6"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-70.jpg" alt="São Paulo 7"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-71.jpg" alt="São Paulo 8"/></div>
+    </div>
+
+    <!-- SUL: PR, RS, SC -->
+    <div class="carousel region-group" id="r-sul">
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-48.jpg" alt="Paraná"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-49.jpg" alt="Paraná 2"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-56.jpg" alt="Rio Grande do Sul"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-57.jpg" alt="Rio Grande do Sul 2"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-58.jpg" alt="Rio Grande do Sul 3"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-59.jpg" alt="Rio Grande do Sul 4"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-60.jpg" alt="Santa Catarina"/></div>
+      <div class="carousel-slide" onclick="openLb(this)"><img src="images/pratica-61.jpg" alt="Santa Catarina 2"/></div>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lb" onclick="closeLb()">
+  <button id="lb-close" onclick="closeLb()">✕</button>
+  <button id="lb-prev" onclick="event.stopPropagation(); lbMove(-1)">‹</button>
+  <img id="lb-img" src="" alt="" onclick="event.stopPropagation()"/>
+  <button id="lb-next" onclick="event.stopPropagation(); lbMove(1)">›</button>
+</div>
+
+<div class="section-sep"></div>
+
+<!-- TRANSPARÊNCIA -->
+<section id="financeiro">
+  <div class="section-label">Transparência</div>
+  <h2>Prestação de contas</h2>
+  <div class="divider"></div>
+  <p class="lead">A campanha foi viabilizada por uma campanha solidária da CAIXA Residencial que destinou parte das vendas do Seguro Residencial a projetos sociais e ambientais em todo o país.</p>
+
+  <div class="finance-row">
+    <div class="finance-card">
+      <div class="fc-label">CAIXA Residencial</div>
+      <div class="fc-val">R$ 239.749,81</div>
+    </div>
+    <div class="finance-card">
+      <div class="fc-label">Total Despesas</div>
+      <div class="fc-val">R$ 242.374,61</div>
+    </div>
+    <div class="finance-card">
+      <div class="fc-label">Recursos Próprios</div>
+      <div class="fc-val">R$ 2.624,80</div>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    "O valor recebido da CAIXA Residencial representa muito mais que um recurso. É esperança, dignidade e a construção de um futuro melhor."
+  </div>
+
+  <p style="color:var(--muted); font-size:.9rem;">Os recursos foram destinados diretamente às práticas territoriais — ações sociais, ambientais, educativas e de revitalização de espaços públicos — com aprovação colegiada pelo Comitê Organizador e pela Presidência Executiva da ONG.</p>
+</section>
+
+<div class="section-sep"></div>
+
+<!-- LEGADO -->
+<section id="legado">
+  <div class="section-label">Legado COP30 · Próximos Passos</div>
+  <h2>Um movimento que continua</h2>
+  <div class="divider"></div>
+  <p class="lead">A MobilizAÇÃO dialoga com o legado da COP30: a resposta aos desafios climáticos passa pela mobilização comunitária e pela participação cidadã.</p>
+
+  <div class="cards-grid" style="margin-bottom:2rem;">
+    <div class="card"><div class="card-icon">📍</div><h3>Yellow Zone · Belém</h3><p>A Moradia e Cidadania participou da COP30 apoiando o Coletivo Vila da Barca, ampliando o debate sobre justiça climática e inclusão social na Amazônia.</p></div>
+    <div class="card"><div class="card-icon">🔁</div><h3>Programa permanente</h3><p>Os aprendizados de 2025 apontam para a institucionalização da MobilizAÇÃO como programa anual contínuo, com metas plurianuais.</p></div>
+    <div class="card"><div class="card-icon">🌐</div><h3>Expansão territorial</h3><p>Ampliar atuação em municípios ainda não contemplados, territórios rurais e áreas de preservação ambiental.</p></div>
+    <div class="card"><div class="card-icon">🤝</div><h3>Novas parcerias</h3><p>Fortalecer alianças com universidades, organizações da sociedade civil e instituições voltadas à agenda ambiental e social.</p></div>
+  </div>
+
+  <div class="pull-quote">
+    "Cada ação local pode gerar impactos globais. A união entre pessoas, instituições e comunidades é o caminho para construir um país mais justo, sustentável e solidário."
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <img src="images/logo_negativo.png" alt="ONG Moradia e Cidadania" class="footer-logo"/>
+    <div class="footer-socials">
+      <a href="https://instagram.com/moradiaecidadania.nacional" target="_blank">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        @moradiaecidadania.nacional
+      </a>
+      <a href="https://facebook.com/moradiaecidadania.nacional" target="_blank">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        @moradiaecidadania.nacional
+      </a>
+      <a href="https://youtube.com/@ongmoradiaecidadania" target="_blank">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" stroke="currentColor" stroke-width="2"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor"/></svg>
+        @ongmoradiaecidadania
+      </a>
+      <a href="https://wa.me/moradiaecidadania" target="_blank">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="currentColor" stroke-width="2"/></svg>
+        Moradia&amp;Cidadania.Nacional
+      </a>
+      <a href="https://moradiaecidadania.org.br" target="_blank">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><line x1="2" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="2"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor" stroke-width="2"/></svg>
+        moradiaecidadania.org.br
+      </a>
+    </div>
+    <p class="footer-copy">© 2025 ONG Moradia e Cidadania — Criada pelos empregados da CAIXA</p>
+  </div>
+</footer>
+
+<script>
+  // Region tabs
+  function showRegion(id, btn) {
+    document.querySelectorAll('.region-group').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.region-tab').forEach(el => el.classList.remove('active'));
+    document.getElementById('r-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // Lightbox
+  let lbSlides = [], lbIdx = 0;
+
+  function openLb(slide) {
+    const region = slide.closest('.region-group');
+    lbSlides = Array.from(region.querySelectorAll('.carousel-slide img'));
+    lbIdx = lbSlides.indexOf(slide.querySelector('img'));
+    document.getElementById('lb-img').src = lbSlides[lbIdx].src;
+    document.getElementById('lb').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLb() {
+    document.getElementById('lb').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function lbMove(dir) {
+    lbIdx = (lbIdx + dir + lbSlides.length) % lbSlides.length;
+    document.getElementById('lb-img').src = lbSlides[lbIdx].src;
+  }
+
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('lb').classList.contains('open')) return;
+    if (e.key === 'ArrowRight') lbMove(1);
+    if (e.key === 'ArrowLeft')  lbMove(-1);
+    if (e.key === 'Escape')     closeLb();
+  });
+</script>
+</body>
+</html>
